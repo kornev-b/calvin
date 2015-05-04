@@ -5,11 +5,11 @@ cModel Technology
 Z0 d/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/simulation/modelsim
 vFeedForwardNN
 !i10b 1
-!s100 4cCeM;j2gbzo23:C4kiW>2
-I6]E8W=@E]caoNFC]:Y]VZ0
-V<a0b<PCm^j95>oGa_gMc11
+!s100 Q4=V7l8Wce@P^G]^71dCg0
+I_;lmoWPdjjPTQcRgNF7hU0
+V5o1l?UkT4EOC9H?FLIMWn3
 Z1 d/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/simulation/modelsim
-Z2 w1430747780
+Z2 w1430776386
 Z3 8/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v
 Z4 F/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v
 L0 19
@@ -17,7 +17,7 @@ Z5 OV;L;10.1d;51
 r1
 !s85 0
 31
-Z6 !s108 1430748241.591007
+Z6 !s108 1430776497.590511
 Z7 !s107 /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v|
 Z8 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/mypc/Dropbox/kazan/calvin/FeedForwardNN|/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v|
 !s101 -O0
@@ -26,14 +26,14 @@ Z10 !s92 -vlog01compat -work work +incdir+/home/mypc/Dropbox/kazan/calvin/FeedFo
 n@feed@forward@n@n
 vram_pos_thru
 !i10b 1
-!s100 fJ3@kAV8z8TZONkD7>8AF2
-I?g2bUI_E;;bzzb2dMifUn1
+!s100 S_Qf7A@@0<]28:Ek3U9ZV0
+INHn=gfaC=K26NHYJm7<Q:1
 V0WEbkfQSk>mQ>8N=GEDEU0
 R1
 R2
 R3
 R4
-L0 73
+L0 74
 R5
 r1
 !s85 0

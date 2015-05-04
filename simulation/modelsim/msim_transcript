@@ -17,15 +17,3 @@
 # Top level modules:
 # 	FeedForwardNN
 # 
-vsim work.FeedForwardNN
-# vsim work.FeedForwardNN 
-# Loading work.FeedForwardNN
-# Loading work.ram_pos_thru
-add wave -position insertpoint  \
-sim:/FeedForwardNN/CLK \
-sim:/FeedForwardNN/addr \
-sim:/FeedForwardNN/state \
-sim:/FeedForwardNN/reset \
-sim:/FeedForwardNN/mem_clk
-force -freeze sim:/FeedForwardNN/CLK 1 0, 0 {50 ps} -r 100
-run

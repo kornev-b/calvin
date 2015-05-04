@@ -23,7 +23,8 @@ module FeedForwardNN(
 	input wire x3,
    output wire y0,
 	output wire y1,
-   input CLK
+   input RST,
+	input CLK
 	);
     
 	reg [3:0] addr;
@@ -38,7 +39,7 @@ module FeedForwardNN(
 	wire mem_clk;
 	//mem_PLL u1(CLK, mem_clk);
 	assign mem_clk = CLK;
-	assign reset = 1;
+	assign reset = RST;
 	
 	ram_pos_thru memory(read_data, addr, write_data, we, mem_clk);
 	
@@ -76,7 +77,7 @@ module ram_pos_thru (q, a, d, we, clk);
 	input [3:0] a;
 	input we, clk;
 	reg [3:0] read_add;
-	reg [255:0] mem [3:0];
+	reg [255:0] mem [3:0] /* synthesis ram_init_file = "TestMemFile.mif" */;
 	
 	always @ (posedge clk)
 	begin

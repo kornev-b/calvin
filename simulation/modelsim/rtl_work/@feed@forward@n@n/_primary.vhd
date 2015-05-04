@@ -8,6 +8,7 @@ entity FeedForwardNN is
         x3              : in     vl_logic;
         y0              : out    vl_logic;
         y1              : out    vl_logic;
+        RST             : in     vl_logic;
         CLK             : in     vl_logic
     );
 end FeedForwardNN;
