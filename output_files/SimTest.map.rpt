@@ -1,5 +1,5 @@
 Analysis & Synthesis report for SimTest
-Tue May  5 08:05:37 2015
+Tue May  5 18:42:50 2015
 Quartus II 32-bit Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
 
 
@@ -13,14 +13,19 @@ Quartus II 32-bit Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. State Machine - |FeedForwardNN|state
-  9. Registers Removed During Synthesis
- 10. Removed Registers Triggering Further Register Optimizations
- 11. General Register Statistics
- 12. Multiplexer Restructuring Statistics (Restructuring Performed)
- 13. Port Connectivity Checks: "ram_pos_thru:memory"
- 14. Elapsed Time Per Partition
- 15. Analysis & Synthesis Messages
+  8. Analysis & Synthesis RAM Summary
+  9. State Machine - |FeedForwardNN|state
+ 10. Registers Removed During Synthesis
+ 11. Removed Registers Triggering Further Register Optimizations
+ 12. General Register Statistics
+ 13. Registers Packed Into Inferred Megafunctions
+ 14. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 15. Source assignments for ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated
+ 16. Parameter Settings for Inferred Entity Instance: ram_pos_thru:memory|altsyncram:mem_rtl_0
+ 17. altsyncram Parameter Settings by Entity Instance
+ 18. Port Connectivity Checks: "ram_pos_thru:memory"
+ 19. Elapsed Time Per Partition
+ 20. Analysis & Synthesis Messages
 
 
 
@@ -46,18 +51,18 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                    ;
 +------------------------------------+--------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue May  5 08:05:37 2015      ;
+; Analysis & Synthesis Status        ; Successful - Tue May  5 18:42:50 2015      ;
 ; Quartus II 32-bit Version          ; 13.1.0 Build 162 10/23/2013 SJ Web Edition ;
 ; Revision Name                      ; SimTest                                    ;
 ; Top-level Entity Name              ; FeedForwardNN                              ;
 ; Family                             ; Cyclone IV E                               ;
-; Total logic elements               ; 9                                          ;
-;     Total combinational functions  ; 9                                          ;
-;     Dedicated logic registers      ; 8                                          ;
-; Total registers                    ; 8                                          ;
+; Total logic elements               ; 17                                         ;
+;     Total combinational functions  ; 11                                         ;
+;     Dedicated logic registers      ; 13                                         ;
+; Total registers                    ; 13                                         ;
 ; Total pins                         ; 8                                          ;
 ; Total virtual pins                 ; 0                                          ;
-; Total memory bits                  ; 0                                          ;
+; Total memory bits                  ; 8                                          ;
 ; Embedded Multiplier 9-bit elements ; 0                                          ;
 ; Total PLLs                         ; 0                                          ;
 +------------------------------------+--------------------------------------------+
@@ -161,13 +166,25 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +----------------------------+--------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                ;
-+----------------------------------+-----------------+------------------------+---------------------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                  ; Library ;
-+----------------------------------+-----------------+------------------------+---------------------------------------------------------------+---------+
-; FeedForwardNN.v                  ; yes             ; User Verilog HDL File  ; /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v ;         ;
-+----------------------------------+-----------------+------------------------+---------------------------------------------------------------+---------+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                                      ;
++-----------------------------------------------------+-----------------+-------------------------------------------------------+---------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path                    ; Used in Netlist ; File Type                                             ; File Name with Absolute Path                                                                      ; Library ;
++-----------------------------------------------------+-----------------+-------------------------------------------------------+---------------------------------------------------------------------------------------------------+---------+
+; FeedForwardNN.v                                     ; yes             ; User Verilog HDL File                                 ; /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v                                     ;         ;
+; ram.hex                                             ; yes             ; Auto-Found Hexadecimal (Intel-Format) File            ; /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/ram.hex                                             ;         ;
+; altsyncram.tdf                                      ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/altsyncram.tdf                             ;         ;
+; stratix_ram_block.inc                               ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/stratix_ram_block.inc                      ;         ;
+; lpm_mux.inc                                         ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/lpm_mux.inc                                ;         ;
+; lpm_decode.inc                                      ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/lpm_decode.inc                             ;         ;
+; aglobal131.inc                                      ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/aglobal131.inc                             ;         ;
+; a_rdenreg.inc                                       ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/a_rdenreg.inc                              ;         ;
+; altrom.inc                                          ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/altrom.inc                                 ;         ;
+; altram.inc                                          ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/altram.inc                                 ;         ;
+; altdpram.inc                                        ; yes             ; Megafunction                                          ; /home/mypc/altera/13.1/quartus/libraries/megafunctions/altdpram.inc                               ;         ;
+; db/altsyncram_d5e1.tdf                              ; yes             ; Auto-Generated Megafunction                           ; /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/db/altsyncram_d5e1.tdf                              ;         ;
+; db/FeedForwardNN.ram0_ram_pos_thru_77656fbe.hdl.mif ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/db/FeedForwardNN.ram0_ram_pos_thru_77656fbe.hdl.mif ;         ;
++-----------------------------------------------------+-----------------+-------------------------------------------------------+---------------------------------------------------------------------------------------------------+---------+
 
 
 +---------------------------------------------------------+
@@ -175,78 +192,91 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimated Total logic elements              ; 9         ;
+; Estimated Total logic elements              ; 17        ;
 ;                                             ;           ;
-; Total combinational functions               ; 9         ;
+; Total combinational functions               ; 11        ;
 ; Logic element usage by number of LUT inputs ;           ;
-;     -- 4 input functions                    ; 2         ;
-;     -- 3 input functions                    ; 1         ;
-;     -- <=2 input functions                  ; 6         ;
+;     -- 4 input functions                    ; 1         ;
+;     -- 3 input functions                    ; 3         ;
+;     -- <=2 input functions                  ; 7         ;
 ;                                             ;           ;
 ; Logic elements by mode                      ;           ;
-;     -- normal mode                          ; 9         ;
+;     -- normal mode                          ; 11        ;
 ;     -- arithmetic mode                      ; 0         ;
 ;                                             ;           ;
-; Total registers                             ; 8         ;
-;     -- Dedicated logic registers            ; 8         ;
+; Total registers                             ; 13        ;
+;     -- Dedicated logic registers            ; 13        ;
 ;     -- I/O registers                        ; 0         ;
 ;                                             ;           ;
 ; I/O pins                                    ; 8         ;
+; Total memory bits                           ; 8         ;
 ; Embedded Multiplier 9-bit elements          ; 0         ;
-; Maximum fan-out node                        ; RST~input ;
-; Maximum fan-out                             ; 8         ;
-; Total fan-out                               ; 49        ;
-; Average fan-out                             ; 1.48      ;
+; Maximum fan-out node                        ; CLK~input ;
+; Maximum fan-out                             ; 15        ;
+; Total fan-out                               ; 81        ;
+; Average fan-out                             ; 1.93      ;
 +---------------------------------------------+-----------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                        ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------+--------------+
-; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                ; Library Name ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------+--------------+
-; |FeedForwardNN             ; 9 (8)             ; 8 (7)        ; 0           ; 0            ; 0       ; 0         ; 8    ; 0            ; |FeedForwardNN                     ; work         ;
-;    |ram_pos_thru:memory|   ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |FeedForwardNN|ram_pos_thru:memory ; work         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------+--------------+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                           ;
++-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                    ; Library Name ;
++-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------+--------------+
+; |FeedForwardNN                            ; 11 (11)           ; 13 (13)      ; 8           ; 0            ; 0       ; 0         ; 8    ; 0            ; |FeedForwardNN                                                                         ; work         ;
+;    |ram_pos_thru:memory|                  ; 0 (0)             ; 0 (0)        ; 8           ; 0            ; 0       ; 0         ; 0    ; 0            ; |FeedForwardNN|ram_pos_thru:memory                                                     ; work         ;
+;       |altsyncram:mem_rtl_0|              ; 0 (0)             ; 0 (0)        ; 8           ; 0            ; 0       ; 0         ; 0    ; 0            ; |FeedForwardNN|ram_pos_thru:memory|altsyncram:mem_rtl_0                                ; work         ;
+;          |altsyncram_d5e1:auto_generated| ; 0 (0)             ; 0 (0)        ; 8           ; 0            ; 0       ; 0         ; 0    ; 0            ; |FeedForwardNN|ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated ; work         ;
++-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                                                                 ;
++------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+------+-----------------------------------------------------+
+; Name                                                                               ; Type ; Mode        ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size ; MIF                                                 ;
++------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+------+-----------------------------------------------------+
+; ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ALTSYNCRAM ; AUTO ; Single Port ; 4            ; 256          ; --           ; --           ; 1024 ; db/FeedForwardNN.ram0_ram_pos_thru_77656fbe.hdl.mif ;
++------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+------+-----------------------------------------------------+
+
+
 Encoding Type:  One-Hot
-+---------------------------------------------------+
-; State Machine - |FeedForwardNN|state              ;
-+------------+------------+------------+------------+
-; Name       ; state.0000 ; state.0010 ; state.0001 ;
-+------------+------------+------------+------------+
-; state.0000 ; 0          ; 0          ; 0          ;
-; state.0001 ; 1          ; 0          ; 1          ;
-; state.0010 ; 1          ; 1          ; 0          ;
-+------------+------------+------------+------------+
++----------------------------------------------------------------+
+; State Machine - |FeedForwardNN|state                           ;
++------------+------------+------------+------------+------------+
+; Name       ; state.0011 ; state.0010 ; state.0001 ; state.0000 ;
++------------+------------+------------+------------+------------+
+; state.0000 ; 0          ; 0          ; 0          ; 0          ;
+; state.0001 ; 0          ; 0          ; 1          ; 1          ;
+; state.0010 ; 0          ; 1          ; 0          ; 1          ;
+; state.0011 ; 1          ; 0          ; 0          ; 1          ;
++------------+------------+------------+------------+------------+
 
 
-+--------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                             ;
-+---------------------------------------+----------------------------------------+
-; Register name                         ; Reason for Removal                     ;
-+---------------------------------------+----------------------------------------+
-; we                                    ; Stuck at GND due to stuck port data_in ;
-; addr[0]                               ; Lost fanout                            ;
-; ram_pos_thru:memory|q[1]              ; Stuck at GND due to stuck port data_in ;
-; selected_data[1]                      ; Stuck at GND due to stuck port data_in ;
-; state~4                               ; Lost fanout                            ;
-; state~5                               ; Lost fanout                            ;
-; counter[2,3]                          ; Lost fanout                            ;
-; Total Number of Removed Registers = 8 ;                                        ;
-+---------------------------------------+----------------------------------------+
++----------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                               ;
++-----------------------------------------+----------------------------------------+
+; Register name                           ; Reason for Removal                     ;
++-----------------------------------------+----------------------------------------+
+; write_data[4..255]                      ; Stuck at GND due to stuck port data_in ;
+; state~2                                 ; Lost fanout                            ;
+; state~3                                 ; Lost fanout                            ;
+; state~4                                 ; Lost fanout                            ;
+; state~5                                 ; Lost fanout                            ;
+; write_data[2,3]                         ; Lost fanout                            ;
+; counter[2,3]                            ; Lost fanout                            ;
+; Total Number of Removed Registers = 260 ;                                        ;
++-----------------------------------------+----------------------------------------+
 
 
-+----------------------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                            ;
-+---------------+---------------------------+--------------------------------------------+
-; Register name ; Reason for Removal        ; Registers Removed due to This Register     ;
-+---------------+---------------------------+--------------------------------------------+
-; we            ; Stuck at GND              ; ram_pos_thru:memory|q[1], selected_data[1] ;
-;               ; due to stuck port data_in ;                                            ;
-+---------------+---------------------------+--------------------------------------------+
++----------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                        ;
++-----------------+---------------------------+------------------------------------------------------+
+; Register name   ; Reason for Removal        ; Registers Removed due to This Register               ;
++-----------------+---------------------------+------------------------------------------------------+
+; write_data[216] ; Stuck at GND              ; write_data[2], write_data[3], counter[2], counter[3] ;
+;                 ; due to stuck port data_in ;                                                      ;
++-----------------+---------------------------+------------------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -254,14 +284,23 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 8     ;
+; Total registers                              ; 13    ;
 ; Number of registers using Synchronous Clear  ; 0     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 2     ;
+; Number of registers using Clock Enable       ; 8     ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++-------------------------------------------------------------------+
+; Registers Packed Into Inferred Megafunctions                      ;
++----------------------------+-------------------------------+------+
+; Register Name              ; Megafunction                  ; Type ;
++----------------------------+-------------------------------+------+
+; ram_pos_thru:memory|q[0,1] ; ram_pos_thru:memory|mem_rtl_0 ; RAM  ;
++----------------------------+-------------------------------+------+
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------+
@@ -271,6 +310,96 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |FeedForwardNN|counter[0]  ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+
+
++------------------------------------------------------------------------------------------------+
+; Source assignments for ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated ;
++---------------------------------+--------------------+------+----------------------------------+
+; Assignment                      ; Value              ; From ; To                               ;
++---------------------------------+--------------------+------+----------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                ;
++---------------------------------+--------------------+------+----------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: ram_pos_thru:memory|altsyncram:mem_rtl_0                 ;
++------------------------------------+-----------------------------------------------------+----------------+
+; Parameter Name                     ; Value                                               ; Type           ;
++------------------------------------+-----------------------------------------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                                                   ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                                                  ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                                                 ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                                                  ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                                                 ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                                                   ; Untyped        ;
+; OPERATION_MODE                     ; SINGLE_PORT                                         ; Untyped        ;
+; WIDTH_A                            ; 256                                                 ; Untyped        ;
+; WIDTHAD_A                          ; 2                                                   ; Untyped        ;
+; NUMWORDS_A                         ; 4                                                   ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED                                        ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                                                ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                                                ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                                                ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                                                ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                                                ; Untyped        ;
+; WIDTH_B                            ; 1                                                   ; Untyped        ;
+; WIDTHAD_B                          ; 1                                                   ; Untyped        ;
+; NUMWORDS_B                         ; 1                                                   ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1                                              ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1                                              ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1                                              ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK1                                              ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED                                        ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1                                              ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                                                ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                                                ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                                                ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                                                ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                                                ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                                                ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                                                   ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                                                   ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                                                ; Untyped        ;
+; BYTE_SIZE                          ; 8                                                   ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE                                           ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; OLD_DATA                                            ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ                                ; Untyped        ;
+; INIT_FILE                          ; db/FeedForwardNN.ram0_ram_pos_thru_77656fbe.hdl.mif ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A                                              ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                                                   ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL                                              ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL                                              ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL                                              ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL                                              ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN                                     ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN                                     ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                                               ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                                               ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                                                   ; Untyped        ;
+; DEVICE_FAMILY                      ; Cyclone IV E                                        ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_d5e1                                     ; Untyped        ;
++------------------------------------+-----------------------------------------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------+
+; altsyncram Parameter Settings by Entity Instance                                     ;
++-------------------------------------------+------------------------------------------+
+; Name                                      ; Value                                    ;
++-------------------------------------------+------------------------------------------+
+; Number of entity instances                ; 1                                        ;
+; Entity Instance                           ; ram_pos_thru:memory|altsyncram:mem_rtl_0 ;
+;     -- OPERATION_MODE                     ; SINGLE_PORT                              ;
+;     -- WIDTH_A                            ; 256                                      ;
+;     -- NUMWORDS_A                         ; 4                                        ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                             ;
+;     -- WIDTH_B                            ; 1                                        ;
+;     -- NUMWORDS_B                         ; 1                                        ;
+;     -- ADDRESS_REG_B                      ; CLOCK1                                   ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                             ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                     ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE                                ;
++-------------------------------------------+------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------+
@@ -287,7 +416,7 @@ Encoding Type:  One-Hot
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:03     ;
+; Top            ; 00:00:11     ;
 +----------------+--------------+
 
 
@@ -297,7 +426,7 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus II 32-bit Analysis & Synthesis
     Info: Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
-    Info: Processing started: Tue May  5 08:05:25 2015
+    Info: Processing started: Tue May  5 18:42:27 2015
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off FeedForwardNN -c SimTest
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 2 design units, including 2 entities, in source file FeedForwardNN.v
@@ -309,12 +438,292 @@ Info (12127): Elaborating entity "FeedForwardNN" for the top level hierarchy
 Warning (10230): Verilog HDL assignment warning at FeedForwardNN.v(50): truncated value with size 8 to match size of target (4)
 Warning (10230): Verilog HDL assignment warning at FeedForwardNN.v(55): truncated value with size 32 to match size of target (4)
 Info (12128): Elaborating entity "ram_pos_thru" for hierarchy "ram_pos_thru:memory"
-Info (276014): Found 1 instances of uninferred RAM logic
-    Info (276004): RAM logic "ram_pos_thru:memory|mem" is uninferred due to inappropriate RAM size
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "y1" is stuck at GND
+Info (19000): Inferred 1 megafunctions from design logic
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "ram_pos_thru:memory|mem_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to SINGLE_PORT
+        Info (286033): Parameter WIDTH_A set to 256
+        Info (286033): Parameter WIDTHAD_A set to 2
+        Info (286033): Parameter NUMWORDS_A set to 4
+        Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_PORT_A set to OLD_DATA
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter INIT_FILE set to db/FeedForwardNN.ram0_ram_pos_thru_77656fbe.hdl.mif
+Info (12130): Elaborated megafunction instantiation "ram_pos_thru:memory|altsyncram:mem_rtl_0"
+Info (12133): Instantiated megafunction "ram_pos_thru:memory|altsyncram:mem_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "SINGLE_PORT"
+    Info (12134): Parameter "WIDTH_A" = "256"
+    Info (12134): Parameter "WIDTHAD_A" = "2"
+    Info (12134): Parameter "NUMWORDS_A" = "4"
+    Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
+    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
+    Info (12134): Parameter "OUTDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "READ_DURING_WRITE_MODE_PORT_A" = "OLD_DATA"
+    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
+    Info (12134): Parameter "INIT_FILE" = "db/FeedForwardNN.ram0_ram_pos_thru_77656fbe.hdl.mif"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_d5e1.tdf
+    Info (12023): Found entity 1: altsyncram_d5e1
+Warning (14284): Synthesized away the following node(s):
+    Warning (14285): Synthesized away the following RAM node(s):
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a2"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a3"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a4"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a5"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a6"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a7"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a8"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a9"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a10"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a11"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a12"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a13"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a14"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a15"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a16"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a17"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a18"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a19"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a20"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a21"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a22"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a23"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a24"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a25"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a26"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a27"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a28"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a29"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a30"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a31"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a32"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a33"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a34"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a35"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a36"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a37"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a38"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a39"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a40"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a41"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a42"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a43"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a44"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a45"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a46"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a47"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a48"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a49"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a50"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a51"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a52"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a53"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a54"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a55"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a56"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a57"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a58"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a59"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a60"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a61"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a62"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a63"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a64"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a65"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a66"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a67"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a68"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a69"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a70"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a71"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a72"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a73"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a74"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a75"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a76"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a77"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a78"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a79"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a80"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a81"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a82"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a83"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a84"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a85"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a86"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a87"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a88"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a89"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a90"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a91"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a92"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a93"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a94"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a95"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a96"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a97"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a98"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a99"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a100"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a101"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a102"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a103"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a104"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a105"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a106"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a107"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a108"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a109"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a110"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a111"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a112"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a113"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a114"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a115"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a116"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a117"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a118"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a119"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a120"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a121"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a122"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a123"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a124"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a125"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a126"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a127"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a128"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a129"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a130"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a131"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a132"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a133"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a134"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a135"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a136"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a137"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a138"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a139"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a140"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a141"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a142"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a143"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a144"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a145"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a146"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a147"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a148"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a149"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a150"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a151"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a152"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a153"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a154"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a155"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a156"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a157"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a158"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a159"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a160"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a161"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a162"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a163"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a164"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a165"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a166"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a167"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a168"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a169"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a170"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a171"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a172"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a173"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a174"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a175"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a176"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a177"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a178"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a179"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a180"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a181"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a182"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a183"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a184"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a185"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a186"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a187"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a188"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a189"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a190"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a191"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a192"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a193"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a194"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a195"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a196"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a197"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a198"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a199"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a200"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a201"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a202"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a203"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a204"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a205"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a206"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a207"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a208"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a209"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a210"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a211"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a212"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a213"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a214"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a215"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a216"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a217"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a218"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a219"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a220"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a221"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a222"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a223"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a224"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a225"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a226"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a227"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a228"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a229"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a230"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a231"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a232"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a233"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a234"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a235"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a236"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a237"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a238"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a239"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a240"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a241"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a242"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a243"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a244"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a245"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a246"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a247"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a248"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a249"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a250"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a251"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a252"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a253"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a254"
+        Warning (14320): Synthesized away node "ram_pos_thru:memory|altsyncram:mem_rtl_0|altsyncram_d5e1:auto_generated|ram_block1a255"
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 5 registers lost all their fanouts during netlist optimizations.
+Info (17049): 8 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 4 input pin(s) that do not drive logic
@@ -322,14 +731,15 @@ Warning (21074): Design contains 4 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "x1"
     Warning (15610): No output dependent on input pin "x2"
     Warning (15610): No output dependent on input pin "x3"
-Info (21057): Implemented 17 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 28 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 6 input pins
     Info (21059): Implemented 2 output pins
-    Info (21061): Implemented 9 logic cells
-Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 10 warnings
-    Info: Peak virtual memory: 375 megabytes
-    Info: Processing ended: Tue May  5 08:05:37 2015
-    Info: Elapsed time: 00:00:12
-    Info: Total CPU time (on all processors): 00:00:11
+    Info (21061): Implemented 18 logic cells
+    Info (21064): Implemented 2 RAM segments
+Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 264 warnings
+    Info: Peak virtual memory: 391 megabytes
+    Info: Processing ended: Tue May  5 18:42:50 2015
+    Info: Elapsed time: 00:00:23
+    Info: Total CPU time (on all processors): 00:00:19
 
 

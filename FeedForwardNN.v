@@ -56,19 +56,24 @@ module FeedForwardNN(
 					state <= 4'd1 ;
 				end
 				4'd1: begin
-					// now set up read
-					we <= 0 ;
-					addr <= counter ; 
+					// do a write
+					// addr <= 7'h0 ;
+					addr <= counter ;
+					write_data <= counter ;
+					we <= 1 ;
 					state <= 4'd2 ;
 				end
 				4'd2:	begin
+					// now set up read
+					we <= 0 ;
+					addr <= counter ; 
+					state <= 4'd3 ;
+				end
+				4'd3: begin
 					// ready one cycle later
 					selected_data <= read_data ;
 					state <= 4'd0 ;
 				end
-				/*4'd2: begin
-					
-				end*/
 			endcase
 		end
 	end 
@@ -82,8 +87,12 @@ module ram_pos_thru (q, a, d, we, clk);
 	input [255:0] d;
 	input [3:0] a;
 	input we, clk;
-	reg [255:0] mem [3:0] /* synthesis ram_init_file = "ram.mif" */ ;
-
+	reg [255:0] mem [3:0] /* synthesis ram_init_file = "TestMemFile.hex" */ ;
+	
+	initial begin
+		$readmemh("ram.hex", mem);
+	end
+	
 	always @ (posedge clk)
 	begin
 		if(we) mem[a] <= d ;
