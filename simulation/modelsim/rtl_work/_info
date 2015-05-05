@@ -4,43 +4,64 @@ K3
 cModel Technology
 Z0 d/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/simulation/modelsim
 vFeedForwardNN
-!i10b 1
-!s100 Q4=V7l8Wce@P^G]^71dCg0
-I_;lmoWPdjjPTQcRgNF7hU0
+IJ3K[Nc<5_1f8@AJNFQJb60
 V5o1l?UkT4EOC9H?FLIMWn3
 Z1 d/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/simulation/modelsim
-Z2 w1430776386
+Z2 w1430801149
 Z3 8/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v
 Z4 F/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v
 L0 19
 Z5 OV;L;10.1d;51
 r1
-!s85 0
 31
-Z6 !s108 1430776497.590511
+Z6 !s108 1430801916.913996
 Z7 !s107 /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v|
 Z8 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/mypc/Dropbox/kazan/calvin/FeedForwardNN|/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN.v|
-!s101 -O0
 Z9 o-vlog01compat -work work -O0
 Z10 !s92 -vlog01compat -work work +incdir+/home/mypc/Dropbox/kazan/calvin/FeedForwardNN -O0
 n@feed@forward@n@n
-vram_pos_thru
 !i10b 1
-!s100 S_Qf7A@@0<]28:Ek3U9ZV0
-INHn=gfaC=K26NHYJm7<Q:1
+!s100 Jh]^5dU6EF^0812^4PlfL0
+!s85 0
+!s101 -O0
+vFeedForwardNN_tb
+!i10b 1
+!s100 jUIUC]0mU38OC^W7O8CV=3
+ImgNSXGOY72S5UMbC6]RkX3
+V`I2M@7UFMMccz96Q7Bdoo1
+R1
+w1430801842
+8/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN_tb.v
+F/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN_tb.v
+L0 3
+R5
+r1
+!s85 0
+31
+!s108 1430801917.078049
+!s107 /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN_tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/mypc/Dropbox/kazan/calvin/FeedForwardNN|/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN_tb.v|
+!s101 -O0
+R9
+R10
+n@feed@forward@n@n_tb
+vram_pos_thru
+Ib36i:5@=Y^_JEU;@WK]>12
 V0WEbkfQSk>mQ>8N=GEDEU0
 R1
 R2
 R3
 R4
-L0 74
+L0 79
 R5
 r1
-!s85 0
 31
 R6
 R7
 R8
-!s101 -O0
 R9
 R10
+!i10b 1
+!s100 ;WUh4eek4YHMmj3:ODFVn3
+!s85 0
+!s101 -O0

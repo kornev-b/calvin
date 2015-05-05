@@ -17,3 +17,57 @@
 # Top level modules:
 # 	FeedForwardNN
 # 
+# vlog -vlog01compat -work work +incdir+/home/mypc/Dropbox/kazan/calvin/FeedForwardNN {/home/mypc/Dropbox/kazan/calvin/FeedForwardNN/FeedForwardNN_tb.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module FeedForwardNN_tb
+# 
+# Top level modules:
+# 	FeedForwardNN_tb
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver -L rtl_work -L work -voptargs="+acc"  FeedForwardNN
+# vsim -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver -L rtl_work -L work -voptargs=\"+acc\" -t 1ps FeedForwardNN 
+# Loading work.FeedForwardNN
+# Loading work.ram_pos_thru
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+run
+run
+run
+vsim work.FeedForwardNN_tb
+# vsim work.FeedForwardNN_tb 
+# Loading work.FeedForwardNN_tb
+# Loading work.FeedForwardNN
+# Loading work.ram_pos_thru
+add wave -position insertpoint  \
+sim:/FeedForwardNN_tb/x0 \
+sim:/FeedForwardNN_tb/x1 \
+sim:/FeedForwardNN_tb/x2 \
+sim:/FeedForwardNN_tb/x3 \
+sim:/FeedForwardNN_tb/y0 \
+sim:/FeedForwardNN_tb/y1 \
+sim:/FeedForwardNN_tb/RST \
+sim:/FeedForwardNN_tb/CLK
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+vsim work.FeedForwardNN
+# vsim work.FeedForwardNN 
+# Loading work.FeedForwardNN
+# Loading work.ram_pos_thru

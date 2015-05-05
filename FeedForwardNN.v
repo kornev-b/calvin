@@ -34,7 +34,7 @@ module FeedForwardNN(
 	wire [255:0] read_data;
 	reg [3:0] state;
 	wire reset;
-	
+	reg [3:0] counter;
 	
 	wire mem_clk;
 	//mem_PLL u1(CLK, mem_clk);
@@ -47,19 +47,24 @@ module FeedForwardNN(
 	begin
 		if(reset) begin
 			state <= 4'd0;
+			counter <= 8'b0;
 		end
 		else begin
 			case(state)
 				4'd0: begin
-					// now set up read
-					we <= 0 ;
-					addr <= 4'b0 ; 
+					counter <= counter + 1 ;
 					state <= 4'd1 ;
 				end
-				4'd1:	begin
+				4'd1: begin
+					// now set up read
+					we <= 0 ;
+					addr <= 4'b1 ; 
+					state <= 4'd2 ;
+				end
+				4'd2:	begin
 					// ready one cycle later
 					selected_data <= read_data ;
-					state <= 4'd2 ;
+					state <= 4'd0 ;
 				end
 				/*4'd2: begin
 					
@@ -72,18 +77,16 @@ module FeedForwardNN(
 endmodule
 
 module ram_pos_thru (q, a, d, we, clk);
-	output wire [255:0] q;
+	output [255:0] q;
+	reg [255:0] q;
 	input [255:0] d;
 	input [3:0] a;
 	input we, clk;
-	reg [3:0] read_add;
-	reg [255:0] mem [3:0] /* synthesis ram_init_file = "TestMemFile.mif" */;
-	
+	reg [255:0] mem [3:0] /* synthesis ram_init_file = "ram.mif" */ ;
+
 	always @ (posedge clk)
 	begin
-		if(we) mem[a] <= d;
-		read_add <= a;
+		if(we) mem[a] <= d ;
+		q <= mem[a] ;
 	end
-	
-	assign q = mem[read_add];
 endmodule
