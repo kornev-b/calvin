@@ -58,7 +58,7 @@ module FeedForwardNN(
 				4'd1: begin
 					// now set up read
 					we <= 0 ;
-					addr <= 4'b1 ; 
+					addr <= counter ; 
 					state <= 4'd2 ;
 				end
 				4'd2:	begin

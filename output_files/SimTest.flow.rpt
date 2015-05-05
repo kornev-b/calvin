@@ -1,5 +1,5 @@
 Flow report for SimTest
-Tue May  5 07:57:57 2015
+Tue May  5 08:05:37 2015
 Quartus II 32-bit Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
 
 
@@ -40,17 +40,17 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------+
 ; Flow Summary                                                                    ;
 +------------------------------------+--------------------------------------------+
-; Flow Status                        ; Successful - Tue May  5 07:57:56 2015      ;
+; Flow Status                        ; Successful - Tue May  5 08:05:37 2015      ;
 ; Quartus II 32-bit Version          ; 13.1.0 Build 162 10/23/2013 SJ Web Edition ;
 ; Revision Name                      ; SimTest                                    ;
 ; Top-level Entity Name              ; FeedForwardNN                              ;
 ; Family                             ; Cyclone IV E                               ;
 ; Device                             ; EP4CE22F17C6                               ;
 ; Timing Models                      ; Final                                      ;
-; Total logic elements               ; 0                                          ;
-;     Total combinational functions  ; 0                                          ;
-;     Dedicated logic registers      ; 0                                          ;
-; Total registers                    ; 0                                          ;
+; Total logic elements               ; 9                                          ;
+;     Total combinational functions  ; 9                                          ;
+;     Dedicated logic registers      ; 8                                          ;
+; Total registers                    ; 8                                          ;
 ; Total pins                         ; 8                                          ;
 ; Total virtual pins                 ; 0                                          ;
 ; Total memory bits                  ; 0                                          ;
@@ -64,7 +64,7 @@ applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/05/2015 07:57:50 ;
+; Start date & time ; 05/05/2015 08:05:29 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; SimTest             ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ applicable agreement for further details.
 ; Assignment Name                      ; Value                                 ; Default Value ; Entity Name   ; Section Id     ;
 +--------------------------------------+---------------------------------------+---------------+---------------+----------------+
 ; ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION   ; On                                    ; Off           ; --            ; --             ;
-; COMPILER_SIGNATURE_ID                ; 150281392306698.143080187009947       ; --            ; --            ; --             ;
+; COMPILER_SIGNATURE_ID                ; 150281392306698.143080232810053       ; --            ; --            ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                    ; --            ; --            ; FeedForwardNN  ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; FeedForwardNN                         ; --            ; --            ; eda_simulation ;
 ; EDA_OUTPUT_DATA_FORMAT               ; Verilog Hdl                           ; --            ; --            ; eda_simulation ;
@@ -104,8 +104,8 @@ applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:08     ; 1.0                     ; 364 MB              ; 00:00:08                           ;
-; Total                ; 00:00:08     ; --                      ; --                  ; 00:00:08                           ;
+; Analysis & Synthesis ; 00:00:11     ; 1.0                     ; 364 MB              ; 00:00:10                           ;
+; Total                ; 00:00:11     ; --                      ; --                  ; 00:00:10                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

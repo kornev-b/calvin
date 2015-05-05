@@ -35,39 +35,26 @@
 # view signals
 # .main_pane.objects.interior.cs.body.tree
 # run -all
-run
-run
-run
-vsim work.FeedForwardNN_tb
-# vsim work.FeedForwardNN_tb 
-# Loading work.FeedForwardNN_tb
-# Loading work.FeedForwardNN
-# Loading work.ram_pos_thru
 add wave -position insertpoint  \
-sim:/FeedForwardNN_tb/x0 \
-sim:/FeedForwardNN_tb/x1 \
-sim:/FeedForwardNN_tb/x2 \
-sim:/FeedForwardNN_tb/x3 \
-sim:/FeedForwardNN_tb/y0 \
-sim:/FeedForwardNN_tb/y1 \
-sim:/FeedForwardNN_tb/RST \
-sim:/FeedForwardNN_tb/CLK
+sim:/FeedForwardNN/x0 \
+sim:/FeedForwardNN/x1 \
+sim:/FeedForwardNN/x2 \
+sim:/FeedForwardNN/x3 \
+sim:/FeedForwardNN/y0 \
+sim:/FeedForwardNN/y1 \
+sim:/FeedForwardNN/RST \
+sim:/FeedForwardNN/CLK \
+sim:/FeedForwardNN/addr \
+sim:/FeedForwardNN/write_data \
+sim:/FeedForwardNN/selected_data \
+sim:/FeedForwardNN/we \
+sim:/FeedForwardNN/read_data \
+sim:/FeedForwardNN/state \
+sim:/FeedForwardNN/reset \
+sim:/FeedForwardNN/counter \
+sim:/FeedForwardNN/mem_clk
+force -freeze sim:/FeedForwardNN/CLK 1 0, 0 {50 ps} -r 100
+force -freeze sim:/FeedForwardNN/RST 1 0, 0 {250 ps} -r 500
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf /home/mypc/Dropbox/kazan/calvin/FeedForwardNN/simulation/modelsim/wave.do
 run
 run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-vsim work.FeedForwardNN
-# vsim work.FeedForwardNN 
-# Loading work.FeedForwardNN
-# Loading work.ram_pos_thru

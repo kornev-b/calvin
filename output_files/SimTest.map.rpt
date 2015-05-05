@@ -1,5 +1,5 @@
 Analysis & Synthesis report for SimTest
-Tue May  5 07:57:57 2015
+Tue May  5 08:05:37 2015
 Quartus II 32-bit Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
 
 
@@ -17,9 +17,10 @@ Quartus II 32-bit Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
   9. Registers Removed During Synthesis
  10. Removed Registers Triggering Further Register Optimizations
  11. General Register Statistics
- 12. Port Connectivity Checks: "ram_pos_thru:memory"
- 13. Elapsed Time Per Partition
- 14. Analysis & Synthesis Messages
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Port Connectivity Checks: "ram_pos_thru:memory"
+ 14. Elapsed Time Per Partition
+ 15. Analysis & Synthesis Messages
 
 
 
@@ -45,15 +46,15 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                    ;
 +------------------------------------+--------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue May  5 07:57:56 2015      ;
+; Analysis & Synthesis Status        ; Successful - Tue May  5 08:05:37 2015      ;
 ; Quartus II 32-bit Version          ; 13.1.0 Build 162 10/23/2013 SJ Web Edition ;
 ; Revision Name                      ; SimTest                                    ;
 ; Top-level Entity Name              ; FeedForwardNN                              ;
 ; Family                             ; Cyclone IV E                               ;
-; Total logic elements               ; 0                                          ;
-;     Total combinational functions  ; 0                                          ;
-;     Dedicated logic registers      ; 0                                          ;
-; Total registers                    ; 0                                          ;
+; Total logic elements               ; 9                                          ;
+;     Total combinational functions  ; 9                                          ;
+;     Dedicated logic registers      ; 8                                          ;
+; Total registers                    ; 8                                          ;
 ; Total pins                         ; 8                                          ;
 ; Total virtual pins                 ; 0                                          ;
 ; Total memory bits                  ; 0                                          ;
@@ -169,42 +170,44 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +----------------------------------+-----------------+------------------------+---------------------------------------------------------------+---------+
 
 
-+-----------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary         ;
-+---------------------------------------------+-------+
-; Resource                                    ; Usage ;
-+---------------------------------------------+-------+
-;                                             ;       ;
-; Total combinational functions               ; 0     ;
-; Logic element usage by number of LUT inputs ;       ;
-;     -- 4 input functions                    ; 0     ;
-;     -- 3 input functions                    ; 0     ;
-;     -- <=2 input functions                  ; 0     ;
-;                                             ;       ;
-; Logic elements by mode                      ;       ;
-;     -- normal mode                          ; 0     ;
-;     -- arithmetic mode                      ; 0     ;
-;                                             ;       ;
-; Total registers                             ; 0     ;
-;     -- Dedicated logic registers            ; 0     ;
-;     -- I/O registers                        ; 0     ;
-;                                             ;       ;
-; I/O pins                                    ; 8     ;
-; Embedded Multiplier 9-bit elements          ; 0     ;
-; Maximum fan-out node                        ; x0    ;
-; Maximum fan-out                             ; 1     ;
-; Total fan-out                               ; 8     ;
-; Average fan-out                             ; 0.50  ;
-+---------------------------------------------+-------+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimated Total logic elements              ; 9         ;
+;                                             ;           ;
+; Total combinational functions               ; 9         ;
+; Logic element usage by number of LUT inputs ;           ;
+;     -- 4 input functions                    ; 2         ;
+;     -- 3 input functions                    ; 1         ;
+;     -- <=2 input functions                  ; 6         ;
+;                                             ;           ;
+; Logic elements by mode                      ;           ;
+;     -- normal mode                          ; 9         ;
+;     -- arithmetic mode                      ; 0         ;
+;                                             ;           ;
+; Total registers                             ; 8         ;
+;     -- Dedicated logic registers            ; 8         ;
+;     -- I/O registers                        ; 0         ;
+;                                             ;           ;
+; I/O pins                                    ; 8         ;
+; Embedded Multiplier 9-bit elements          ; 0         ;
+; Maximum fan-out node                        ; RST~input ;
+; Maximum fan-out                             ; 8         ;
+; Total fan-out                               ; 49        ;
+; Average fan-out                             ; 1.48      ;
++---------------------------------------------+-----------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
-; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name ; Library Name ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
-; |FeedForwardNN             ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 8    ; 0            ; |FeedForwardNN      ; work         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                        ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------+--------------+
+; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                ; Library Name ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------+--------------+
+; |FeedForwardNN             ; 9 (8)             ; 8 (7)        ; 0           ; 0            ; 0       ; 0         ; 8    ; 0            ; |FeedForwardNN                     ; work         ;
+;    |ram_pos_thru:memory|   ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |FeedForwardNN|ram_pos_thru:memory ; work         ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
@@ -220,35 +223,30 @@ Encoding Type:  One-Hot
 +------------+------------+------------+------------+
 
 
-+---------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                              ;
-+----------------------------------------+----------------------------------------+
-; Register name                          ; Reason for Removal                     ;
-+----------------------------------------+----------------------------------------+
-; we                                     ; Stuck at GND due to stuck port data_in ;
-; addr[1]                                ; Stuck at GND due to stuck port data_in ;
-; addr[0]                                ; Stuck at VCC due to stuck port data_in ;
-; ram_pos_thru:memory|q[0]               ; Stuck at VCC due to stuck port data_in ;
-; ram_pos_thru:memory|q[1]               ; Stuck at GND due to stuck port data_in ;
-; selected_data[0]                       ; Stuck at VCC due to stuck port data_in ;
-; selected_data[1]                       ; Stuck at GND due to stuck port data_in ;
-; state~5                                ; Lost fanout                            ;
-; state~6                                ; Lost fanout                            ;
-; state.0001                             ; Lost fanout                            ;
-; state.0010                             ; Lost fanout                            ;
-; state.0000                             ; Lost fanout                            ;
-; Total Number of Removed Registers = 12 ;                                        ;
-+----------------------------------------+----------------------------------------+
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; we                                    ; Stuck at GND due to stuck port data_in ;
+; addr[0]                               ; Lost fanout                            ;
+; ram_pos_thru:memory|q[1]              ; Stuck at GND due to stuck port data_in ;
+; selected_data[1]                      ; Stuck at GND due to stuck port data_in ;
+; state~4                               ; Lost fanout                            ;
+; state~5                               ; Lost fanout                            ;
+; counter[2,3]                          ; Lost fanout                            ;
+; Total Number of Removed Registers = 8 ;                                        ;
++---------------------------------------+----------------------------------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                                                                        ;
-+---------------+---------------------------+----------------------------------------------------------------------------------------+
-; Register name ; Reason for Removal        ; Registers Removed due to This Register                                                 ;
-+---------------+---------------------------+----------------------------------------------------------------------------------------+
-; we            ; Stuck at GND              ; ram_pos_thru:memory|q[0], ram_pos_thru:memory|q[1], selected_data[0], selected_data[1] ;
-;               ; due to stuck port data_in ;                                                                                        ;
-+---------------+---------------------------+----------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                            ;
++---------------+---------------------------+--------------------------------------------+
+; Register name ; Reason for Removal        ; Registers Removed due to This Register     ;
++---------------+---------------------------+--------------------------------------------+
+; we            ; Stuck at GND              ; ram_pos_thru:memory|q[1], selected_data[1] ;
+;               ; due to stuck port data_in ;                                            ;
++---------------+---------------------------+--------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -256,14 +254,23 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 0     ;
+; Total registers                              ; 8     ;
 ; Number of registers using Synchronous Clear  ; 0     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Clock Enable       ; 2     ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |FeedForwardNN|counter[0]  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------+
@@ -280,7 +287,7 @@ Encoding Type:  One-Hot
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -290,7 +297,7 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus II 32-bit Analysis & Synthesis
     Info: Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
-    Info: Processing started: Tue May  5 07:57:47 2015
+    Info: Processing started: Tue May  5 08:05:25 2015
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off FeedForwardNN -c SimTest
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 2 design units, including 2 entities, in source file FeedForwardNN.v
@@ -305,25 +312,24 @@ Info (12128): Elaborating entity "ram_pos_thru" for hierarchy "ram_pos_thru:memo
 Info (276014): Found 1 instances of uninferred RAM logic
     Info (276004): RAM logic "ram_pos_thru:memory|mem" is uninferred due to inappropriate RAM size
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "y0" is stuck at GND
     Warning (13410): Pin "y1" is stuck at GND
+Info (286030): Timing-Driven Synthesis is running
 Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 6 input pin(s) that do not drive logic
+Warning (21074): Design contains 4 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "x0"
     Warning (15610): No output dependent on input pin "x1"
     Warning (15610): No output dependent on input pin "x2"
     Warning (15610): No output dependent on input pin "x3"
-    Warning (15610): No output dependent on input pin "RST"
-    Warning (15610): No output dependent on input pin "CLK"
-Info (21057): Implemented 8 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 17 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 6 input pins
     Info (21059): Implemented 2 output pins
-Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 13 warnings
+    Info (21061): Implemented 9 logic cells
+Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 10 warnings
     Info: Peak virtual memory: 375 megabytes
-    Info: Processing ended: Tue May  5 07:57:57 2015
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:09
+    Info: Processing ended: Tue May  5 08:05:37 2015
+    Info: Elapsed time: 00:00:12
+    Info: Total CPU time (on all processors): 00:00:11
 
 
