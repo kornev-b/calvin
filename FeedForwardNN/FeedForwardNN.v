@@ -18,14 +18,13 @@ endmodule //end top level DE2_TOP
 */
 module FeedForwardNN(
 	/* x inputs are in range 0-255 => 8 bits wide */
-   input wire [7:0] x0,
-	input wire [7:0] x1,
-	input wire [7:0] x2,
-	input wire [7:0] x3,
+	/* for x's to be signed we need 9 bits! */
+   input wire signed [8:0] x0, x1,
+	input wire signed [8:0] x2,
+	input wire signed [8:0] x3,
    output wire y0,
 	output wire y1,
-   input RST,
-	input CLK
+   input RST, CLK
 	);
    /* WWIDTH = Width of one weight */
 	parameter WWIDTH = 8;
@@ -41,7 +40,8 @@ module FeedForwardNN(
 	
 	/* TEMPORARY registers to save results of dot product of inputs and weights at 1st layer */
 	/* 16-bit wide because we multiply 8-bit input to 8-bit weight */
-	reg [15:0] z0, z1, z2, z3, z4, z5;
+	/* for z's to be signed we need 17 bits!*/
+	reg signed [16:0] z0, z1, z2, z3, z4, z5;
 	
 	wire mem_clk;
 	//mem_PLL u1(CLK, mem_clk);

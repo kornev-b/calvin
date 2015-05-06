@@ -1,7 +1,7 @@
 `timescale 1 ps/ 1 ps
 
 module FeedForwardNN_tb;
-	reg [7:0] x0, x1, x2, x3 ;
+	reg signed [8:0] x0, x1, x2, x3 ;
 	wire y0, y1;
    reg RST, CLK;
    FeedForwardNN FF0 (
@@ -31,6 +31,6 @@ module FeedForwardNN_tb;
 		#100 RST = 1 ;
 		#200 RST = 0 ;
 		
-		#300 x0 = 8'd158; x1 = 8'd205; x2 = 8'd81; x3 = 8'd76;
+		#300 x0 = 8'd159; x1 = 8'd205; x2 = 8'd81; x3 = 8'd76;
 	end
 endmodule 
