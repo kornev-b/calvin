@@ -38,10 +38,16 @@ module FeedForwardNN(
 	wire reset;
 	reg [3:0] counter;
 	
+	reg signed [16:0] a0_x;
+	wire signed [8:0] a0_y;
+	
 	/* TEMPORARY registers to save results of dot product of inputs and weights at 1st layer */
 	/* 16-bit wide because we multiply 8-bit input to 8-bit weight */
 	/* for z's to be signed we need 17 bits!*/
 	reg signed [16:0] z0, z1, z2, z3, z4, z5;
+	
+	/* Storing activation function output */
+	reg signed [8:0] v0 ; 
 	
 	wire mem_clk;
 	//mem_PLL u1(CLK, mem_clk);
@@ -49,6 +55,7 @@ module FeedForwardNN(
 	assign reset = RST;
 	
 	ram_pos_thru memory(read_data, addr, write_data, we, mem_clk);
+	activation a0(a0_x, a0_y, mem_clk);
 	
 	always @ (negedge mem_clk)
 	begin
@@ -83,6 +90,13 @@ module FeedForwardNN(
 					state <= 4'd2 ;
 				end
 				4'd2: begin
+					// set up activation func.
+					a0_x <= z0 ;
+					
+					state <= 4'd3 ;
+				end
+				4'd3: begin
+					v0 <= a0_y ;
 					
 					state <= 4'd0 ;
 				end
@@ -91,6 +105,19 @@ module FeedForwardNN(
 	end 
 	assign y0 = ~selected_data[0] ;
 	assign y1 = selected_data[1] ;
+endmodule
+
+module activation( x , y, clk);
+	input wire signed [16:0] x;
+	output reg signed [8:0] y;
+	input clk;
+	
+	always @ (posedge clk)
+	begin
+		if(x < -16'd1) y = -8'd1 ;
+		else if (x > 16'd1) y = 8'd1 ;
+		else y = 8'd0 ;
+	end
 endmodule
 
 module ram_pos_thru (q, a, d, we, clk);
