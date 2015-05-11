@@ -45,6 +45,7 @@ module FeedForwardNN(
 	/* 16-bit wide because we multiply 8-bit input to 8-bit weight */
 	/* for z's to be signed we need 17 bits!*/
 	reg signed [16:0] z0, z1, z2, z3, z4, z5;
+	reg signed [16:0] u0, u1;
 	
 	/* Storing activation function output */
 	reg signed [8:0] v0, v1, v2, v3, v4, v5 ; 
@@ -81,6 +82,9 @@ module FeedForwardNN(
 					// ready one cycle later
 					selected_data <= read_data ;
 					
+					state <= 4'd2 ;
+				end
+				4'd2: begin
 					// calculating dot products
 					/* each weight is 8-bit wide */
 					/* w0 is 0th to 7th bits of selected_data */
@@ -117,9 +121,9 @@ module FeedForwardNN(
 							x2 * $signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) +
 							x3 * $signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]);
 					
-					state <= 4'd2 ;
+					state <= 4'd3 ;
 				end
-				4'd2: begin
+				4'd3: begin
 					// set up activation func.
 					a0_x <= z0 ;
 					a1_x <= z1 ;
@@ -128,9 +132,9 @@ module FeedForwardNN(
 					a4_x <= z4 ;
 					a5_x <= z5 ;
 					
-					state <= 4'd3 ;
+					state <= 4'd4 ;
 				end
-				4'd3: begin
+				4'd4: begin
 					v0 <= a0_y ;
 					v1 <= a1_y ;
 					v2 <= a2_y ;
@@ -138,6 +142,37 @@ module FeedForwardNN(
 					v4 <= a4_y ;
 					v5 <= a5_y ;
 					
+					state <= 4'd5 ;
+				end
+				4'd5: begin
+					// now set up read for next layer's weights
+					we <= 0 ;
+					/* weights for second layer are at address=1 */
+					addr <= 1 ; 
+					
+					state <= 4'd6 ;
+				end
+				4'd6: begin
+					// ready one cycle later
+					selected_data <= read_data ;
+					state <= 4'd7 ;
+				end
+				4'd7: begin
+					// calculating dot products
+					u0 <= v0 * $signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) +
+							v1 * $signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) +
+							v2 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
+							v3 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) +
+							v4 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) +
+							v5 * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]);
+
+					u1 <= v0 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) +
+							v1 * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) +
+							v2 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) +
+							v3 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) +
+							v4 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
+							v5 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
+							
 					state <= 4'd0 ;
 				end
 			endcase
