@@ -154,9 +154,14 @@ module activation( x , y, clk);
 	
 	always @ (posedge clk)
 	begin
-		if(x < -16'd1) y = -8'd1 ;
-		else if (x > 16'd1) y = 8'd1 ;
-		else y = 8'd0 ;
+		if(x <= $signed(-16'd2)) begin
+			y = -8'd1 ;
+		end else if (x >= $signed(16'd2)) begin
+			y = 8'd1 ;
+		end else begin 
+			y = 8'd0 ;
+		end
+		
 	end
 endmodule
 
