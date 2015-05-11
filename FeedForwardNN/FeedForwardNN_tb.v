@@ -31,6 +31,8 @@ module FeedForwardNN_tb;
 		#100 RST = 1 ;
 		#101 RST = 0 ;
 		
-		#1 x0 = 8'd196; x1 = 8'd243; x2 = 8'd106; x3 = 8'd149;
+		#0 x0 = 8'd196; x1 = 8'd243; x2 = 8'd106; x3 = 8'd149;
+		#1800 x0 = 8'd13; x1 = 8'd37; x2 = 8'd128; x3 = 8'd160;
+
 	end
 endmodule 
