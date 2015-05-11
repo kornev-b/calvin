@@ -147,6 +147,24 @@ module FeedForwardNN(
 	assign y1 = selected_data[1] ;
 endmodule
 
+/* Activation function module */
+/* 
+	Here we approximate following function:
+	# Linear saturating activation function parameters
+	f_min = -1.
+	f_max = 1.
+	slope = 1./2
+	f_r = f_max - f_min
+
+	def A(value):
+
+		if value <= -f_r / (2 * slope):
+			return f_min
+		elif value >= f_r / (2 * slope):
+			return f_max
+		else:
+			return slope * value + (f_min + f_max) / 2 
+*/
 module activation( x , y, clk);
 	input wire signed [16:0] x;
 	output reg signed [8:0] y;
@@ -158,6 +176,23 @@ module activation( x , y, clk);
 			y = -8'd1 ;
 		end else if (x >= $signed(16'd2)) begin
 			y = 8'd1 ;
+		/* this case should return value * slope (x * 1/2) */
+		/* 
+			>>> A(-1.9)
+			-0.95
+			>>> A(-1.5)
+			-0.75
+			>>> A(-1)
+			-0.5
+			>>> A(1)
+			0.5
+			>>> A(1.5)
+			0.75
+			>>> A(1.9)
+			0.95 
+		*/
+		/* but in all-integer design - ? */
+		/* for now we just return 0 */
 		end else begin 
 			y = 8'd0 ;
 		end
