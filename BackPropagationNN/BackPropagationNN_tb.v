@@ -38,4 +38,4 @@ module BackPropagationNN_tb;
 		#1800 x0 = 8'd13; x1 = 8'd37; x2 = 8'd128; x3 = 8'd160; desired_y0 = 8'd1; desired_y1 = 8'd1;
 
 	end
-endmodule 
+endmodule  

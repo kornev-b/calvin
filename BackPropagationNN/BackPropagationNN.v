@@ -41,7 +41,7 @@ module BackPropagationNN(
 	reg signed [16:0] a0_x, a1_x, a2_x, a3_x, a4_x, a5_x;
 	wire signed [8:0] a0_y, a1_y, a2_y, a3_y, a4_y, a5_y;
 	
-	reg signed [8:0] ad0_x, ad1_x, ad2_x, ad3_x, ad4_x, ad5_x;
+	reg signed [16:0] ad0_x, ad1_x, ad2_x, ad3_x, ad4_x, ad5_x;
 	wire signed [8:0] ad0_y, ad1_y, ad2_y, ad3_y, ad4_y, ad5_y;
 	
 	
@@ -73,6 +73,13 @@ module BackPropagationNN(
 	activation a3(a3_x, a3_y, mem_clk);
 	activation a4(a4_x, a4_y, mem_clk);
 	activation a5(a5_x, a5_y, mem_clk);
+	
+	activation_derivative ad0(ad0_x, ad0_y, mem_clk);
+	activation_derivative ad1(ad1_x, ad1_y, mem_clk);
+	activation_derivative ad2(ad2_x, ad2_y, mem_clk);
+	activation_derivative ad3(ad3_x, ad3_y, mem_clk);
+	activation_derivative ad4(ad4_x, ad4_y, mem_clk);
+	activation_derivative ad5(ad5_x, ad5_y, mem_clk);
 	
 	always @ (negedge mem_clk)
 	begin
@@ -287,4 +294,4 @@ module activation_derivative( x , y, clk);
 		end
 		
 	end
-endmodule
+endmodule 
