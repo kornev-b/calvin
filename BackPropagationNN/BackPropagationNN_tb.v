@@ -33,9 +33,19 @@ module BackPropagationNN_tb;
 	begin
 		#100 RST = 1 ;
 		#101 RST = 0 ;
+		/*
+		159	205	81	76	0	1	
+		168	218	37	36	0	1	
+		111	216	3	89	0	1	
+		238	216	9	8	0	1	
+		78	101	214	226	0	0	
+		*/
+		#0 x0 = 8'd159; x1 = 8'd205; x2 = 8'd81; x3 = 8'd76; desired_y0 = 8'd0; desired_y1 = 8'd1;
+		#4800 x0 = 8'd168; x1 = 8'd218; x2 = 8'd37; x3 = 8'd36; desired_y0 = 8'd0; desired_y1 = 8'd1;
+		#4800 x0 = 8'd111; x1 = 8'd216; x2 = 8'd3; x3 = 8'd89; desired_y0 = 8'd0; desired_y1 = 8'd1;
+		#4800 x0 = 8'd238; x1 = 8'd216; x2 = 8'd9; x3 = 8'd8; desired_y0 = 8'd0; desired_y1 = 8'd1;
+		#4800 x0 = 8'd78; x1 = 8'd101; x2 = 8'd214; x3 = 8'd226; desired_y0 = 8'd0; desired_y1 = 8'd0;
 		
-		#0 x0 = 8'd196; x1 = 8'd243; x2 = 8'd106; x3 = 8'd149; desired_y0 = 8'd0; desired_y1 = 8'd0;
-		#1800 x0 = 8'd13; x1 = 8'd37; x2 = 8'd128; x3 = 8'd160; desired_y0 = 8'd1; desired_y1 = 8'd0;
-
 	end
 endmodule  
+

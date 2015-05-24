@@ -276,41 +276,93 @@ module BackPropagationNN(
                // w_1[i,j] = round(w_1[i,j] - learning_rate * g_1[i,j])
 					//
 					// potential overflow - 8-bit a0_y multiplied by 8-bit delta_20
-					selected_data[1 * WWIDTH - 1: 0 * WWIDTH] <= 
-						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) - (a0_y >> 3 * delta_20) ; // shifting by 3 positions is dividing by 8, which stands for dividing by 10 or 0.1*x, where 0.1 is learning rate
 					
-					selected_data[2 * WWIDTH - 1: 1 * WWIDTH] <= 
-						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) - (a0_y >> 3 * delta_21) ;
-					/*	
-							x2 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
-							x3 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]);
-					
-					z1 <= x0 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) +
-							x1 * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) +
-							x2 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) +
-							x3 * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]);
-					
-					z2 <= x0 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) +
-							x1 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) +
-							x2 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
-							x3 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
-							
-					z3 <= x0 * $signed(selected_data[13 * WWIDTH - 1: 12 * WWIDTH]) +
-							x1 * $signed(selected_data[14 * WWIDTH - 1: 13 * WWIDTH]) +
-							x2 * $signed(selected_data[15 * WWIDTH - 1: 14 * WWIDTH]) +
-							x3 * $signed(selected_data[16 * WWIDTH - 1: 15 * WWIDTH]);
-							
-					z4 <= x0 * $signed(selected_data[17 * WWIDTH - 1: 16 * WWIDTH]) +
-							x1 * $signed(selected_data[18 * WWIDTH - 1: 17 * WWIDTH]) +
-							x2 * $signed(selected_data[19 * WWIDTH - 1: 18 * WWIDTH]) +
-							x3 * $signed(selected_data[20 * WWIDTH - 1: 19 * WWIDTH]);
-					
-					z5 <= x0 * $signed(selected_data[21 * WWIDTH - 1: 20 * WWIDTH]) +
-							x1 * $signed(selected_data[22 * WWIDTH - 1: 21 * WWIDTH]) +
-							x2 * $signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) +
-							x3 * $signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]);
+					/* adjusting weights of 0th layer's 0th neuron's connections to all 6 neurons of 1st layer */
+					/* weights in memory are aligned in the following way: 
+						bits [0-7] -> weight of connection of 0th layer 0th neuron to 1st layer 0th neuron
+						bits [32-39] -> " " " 0th layer 0th neuron to 1st layer 2nd neuron
+						bits [64-71] -> " " " 0th layer 0th neuron to 1st layer 3rd neuron
+						etc.
+						
+						See difference between using memory in state=2 and here: in state=2 adjacent weights are used,
+						e.g. weights of 0th layer 0th neuron, 1st neuron, 2nd neuron etc. connections to 1st layer 0th neuron
 					*/
-				state <= 6'd16 ;
+					selected_data[1 * WWIDTH - 1: 0 * WWIDTH] <= 
+						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) - ((a0_y >> 3) * delta_20) ; // shifting by 3 positions is dividing by 8, which stands for dividing by 10 or 0.1*x, where 0.1 is learning rate
+					
+					selected_data[5 * WWIDTH - 1: 4 * WWIDTH] <= 
+						$signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) - ((a0_y >> 3) * delta_21) ;
+					
+					selected_data[9 * WWIDTH - 1: 8 * WWIDTH] <= 
+						$signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) - ((a0_y >> 3) * delta_22) ;
+					
+					selected_data[13 * WWIDTH - 1: 12 * WWIDTH] <=
+						$signed(selected_data[13 * WWIDTH - 1: 12 * WWIDTH]) - ((a0_y >> 3) * delta_23) ;
+						
+					selected_data[17 * WWIDTH - 1: 16 * WWIDTH] <=
+						$signed(selected_data[17 * WWIDTH - 1: 16 * WWIDTH]) - ((a0_y >> 3) * delta_24) ;
+						
+					selected_data[21 * WWIDTH - 1: 20 * WWIDTH] <=
+						$signed(selected_data[21 * WWIDTH - 1: 20 * WWIDTH]) - ((a0_y >> 3) * delta_25) ;
+						
+					/* 0th layer 1st neuron */	
+					selected_data[2 * WWIDTH - 1: 1 * WWIDTH] <=
+						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) - ((a1_y >> 3) * delta_20) ;
+					
+					selected_data[6 * WWIDTH - 1: 5 * WWIDTH] <= 
+						$signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) - ((a1_y >> 3) * delta_21) ;
+					
+					selected_data[10 * WWIDTH - 1: 9 * WWIDTH] <= 
+						$signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) - ((a1_y >> 3) * delta_22) ;
+					
+					selected_data[14 * WWIDTH - 1: 13 * WWIDTH] <=
+						$signed(selected_data[14 * WWIDTH - 1: 13 * WWIDTH]) - ((a1_y >> 3) * delta_23) ;
+						
+					selected_data[18 * WWIDTH - 1: 17 * WWIDTH] <=
+						$signed(selected_data[18 * WWIDTH - 1: 17 * WWIDTH]) - ((a1_y >> 3) * delta_24) ;
+						
+					selected_data[22 * WWIDTH - 1: 21 * WWIDTH] <=
+						$signed(selected_data[22 * WWIDTH - 1: 21 * WWIDTH]) - ((a1_y >> 3) * delta_25) ;
+						
+					/* 0th layer 2nd neuron */
+					selected_data[3 * WWIDTH - 1: 2 * WWIDTH] <=
+						$signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) - ((a2_y >> 3) * delta_20) ;
+					
+					selected_data[7 * WWIDTH - 1: 6 * WWIDTH] <= 
+						$signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) - ((a2_y >> 3) * delta_21) ;
+					
+					selected_data[11 * WWIDTH - 1: 10 * WWIDTH] <= 
+						$signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) - ((a2_y >> 3) * delta_22) ;
+					
+					selected_data[15 * WWIDTH - 1: 14 * WWIDTH] <=
+						$signed(selected_data[15 * WWIDTH - 1: 14 * WWIDTH]) - ((a2_y >> 3) * delta_23) ;
+						
+					selected_data[19 * WWIDTH - 1: 18 * WWIDTH] <=
+						$signed(selected_data[19 * WWIDTH - 1: 18 * WWIDTH]) - ((a2_y >> 3) * delta_24) ;
+						
+					selected_data[23 * WWIDTH - 1: 22 * WWIDTH] <=
+						$signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) - ((a2_y >> 3) * delta_25) ;
+						
+					/* 0th layer 3rd neuron */
+					selected_data[4 * WWIDTH - 1: 3 * WWIDTH] <=
+						$signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) - ((a3_y >> 3) * delta_20) ;
+					
+					selected_data[8 * WWIDTH - 1: 7 * WWIDTH] <= 
+						$signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) - ((a3_y >> 3) * delta_21) ;
+					
+					selected_data[12 * WWIDTH - 1: 11 * WWIDTH] <= 
+						$signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]) - ((a3_y >> 3) * delta_22) ;
+					
+					selected_data[16 * WWIDTH - 1: 15 * WWIDTH] <=
+						$signed(selected_data[16 * WWIDTH - 1: 15 * WWIDTH]) - ((a3_y >> 3) * delta_23) ;
+						
+					selected_data[20 * WWIDTH - 1: 19 * WWIDTH] <=
+						$signed(selected_data[20 * WWIDTH - 1: 19 * WWIDTH]) - ((a3_y >> 3) * delta_24) ;
+						
+					selected_data[24 * WWIDTH - 1: 23 * WWIDTH] <=
+						$signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]) - ((a3_y >> 3) * delta_25) ;
+					
+					state <= 6'd16 ;
 				end
 				6'd16: begin
 					write_data <= selected_data ;
@@ -320,7 +372,86 @@ module BackPropagationNN(
 				6'd17: begin
 					we <= 1 ;
 					
-					state <= 6'd0 ;
+					state <= 6'd18 ;				
+				end
+				6'd18: begin
+					// going to reading mode & setting address for 1st layer's weights
+					we <= 0;
+					
+					addr <= 1 ; 
+					
+					state <= 6'd19 ;				
+				end
+				6'd19: begin
+					// ready one cycle later
+					selected_data <= read_data ;
+					state <= 6'd20 ;
+				end
+				
+				6'd20: begin					
+					// setting up activation func. with I_2
+					a0_x <= z0 ;
+					a1_x <= z1 ;
+					a2_x <= z2 ;
+					a3_x <= z3 ;
+					a4_x <= z4 ;
+					a5_x <= z5 ;
+					state <= 6'd21 ;
+				end
+				6'd21: begin
+					/* 1st layer 0th neuron */
+					selected_data[1 * WWIDTH - 1: 0 * WWIDTH] <=
+						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) - ((a0_y >> 3) * delta_30) ;
+					
+					selected_data[7 * WWIDTH - 1: 6 * WWIDTH] <=
+						$signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) - ((a0_y >> 3) * delta_31) ;
+					
+					/* 1st layer 1st neuron */
+					selected_data[2 * WWIDTH - 1: 1 * WWIDTH] <=
+						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) - ((a1_y >> 3) * delta_30) ;
+					
+					selected_data[8 * WWIDTH - 1: 7 * WWIDTH] <=
+						$signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) - ((a1_y >> 3) * delta_31) ;
+						
+					/* 1st layer 2nd neuron */
+					selected_data[3 * WWIDTH - 1: 2 * WWIDTH] <=
+						$signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) - ((a2_y >> 3) * delta_30) ;
+					
+					selected_data[9 * WWIDTH - 1: 8 * WWIDTH] <=
+						$signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) - ((a2_y >> 3) * delta_31) ;
+						
+					/* 1st layer 3rd neuron */
+					selected_data[4 * WWIDTH - 1: 3 * WWIDTH] <=
+						$signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) - ((a3_y >> 3) * delta_30) ;
+					
+					selected_data[10 * WWIDTH - 1: 9 * WWIDTH] <=
+						$signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) - ((a3_y >> 3) * delta_31) ;		
+			
+					/* 1st layer 4th neuron */
+					selected_data[5 * WWIDTH - 1: 4 * WWIDTH] <=
+						$signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) - ((a4_y >> 3) * delta_30) ;
+					
+					selected_data[11 * WWIDTH - 1: 10 * WWIDTH] <=
+						$signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) - ((a4_y >> 3) * delta_31) ;
+											
+					/* 1st layer 5th neuron */
+					selected_data[6 * WWIDTH - 1: 5 * WWIDTH] <=
+						$signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) - ((a5_y >> 3) * delta_30) ;
+					
+					selected_data[12 * WWIDTH - 1: 11 * WWIDTH] <=
+						$signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]) - ((a5_y >> 3) * delta_31) ;
+					
+					state <= 6'd22 ;
+				end
+				6'd22: begin
+					write_data <= selected_data ;
+					
+					state <= 6'd23 ;
+				end
+				6'd23: begin
+					we <= 1 ;
+					
+					state <= 6'd0 ;				
 				end
 			endcase
 		end
