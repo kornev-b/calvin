@@ -34,7 +34,7 @@ module BackPropagationNN(
 	reg [255:0] selected_data;
 	reg we;
 	wire [255:0] read_data;
-	reg [3:0] state;
+	reg [5:0] state;
 	wire reset;
 	reg [3:0] counter;
 	
@@ -88,21 +88,21 @@ module BackPropagationNN(
 		end
 		else begin
 			case(state)
-				4'd0: begin
+				6'd0: begin
 					// now set up read
 					we <= 0 ;
 					/* weights for first layer are at address=0 */
 					addr <= 0 ; 
 					
-					state <= 4'd1 ;
+					state <= 6'd1 ;
 				end
-				4'd1: begin
+				6'd1: begin
 					// ready one cycle later
 					selected_data <= read_data ;
 					
-					state <= 4'd2 ;
+					state <= 6'd2 ;
 				end
-				4'd2: begin
+				6'd2: begin
 					// calculating dot products
 					/* each weight is 8-bit wide */
 					/* w0 is 0th to 7th bits of selected_data */
@@ -139,9 +139,9 @@ module BackPropagationNN(
 							x2 * $signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) +
 							x3 * $signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]);
 					
-					state <= 4'd3 ;
+					state <= 6'd3 ;
 				end
-				4'd3: begin
+				6'd3: begin
 					// set up activation func.
 					a0_x <= z0 ;
 					a1_x <= z1 ;
@@ -150,9 +150,9 @@ module BackPropagationNN(
 					a4_x <= z4 ;
 					a5_x <= z5 ;
 					
-					state <= 4'd4 ;
+					state <= 6'd4 ;
 				end
-				4'd4: begin
+				6'd4: begin
 					v0 <= a0_y ;
 					v1 <= a1_y ;
 					v2 <= a2_y ;
@@ -160,22 +160,22 @@ module BackPropagationNN(
 					v4 <= a4_y ;
 					v5 <= a5_y ;
 					
-					state <= 4'd5 ;
+					state <= 6'd5 ;
 				end
-				4'd5: begin
+				6'd5: begin
 					// now set up read for next layer's weights
 					we <= 0 ;
 					/* weights for second layer are at address=1 */
 					addr <= 1 ; 
 					
-					state <= 4'd6 ;
+					state <= 6'd6 ;
 				end
-				4'd6: begin
+				6'd6: begin
 					// ready one cycle later
 					selected_data <= read_data ;
-					state <= 4'd7 ;
+					state <= 6'd7 ;
 				end
-				4'd7: begin
+				6'd7: begin
 					// calculating dot products
 					u0 <= v0 * $signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) +
 							v1 * $signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) +
@@ -191,16 +191,16 @@ module BackPropagationNN(
 							v4 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
 							v5 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
 							
-					state <= 4'd8 ;
+					state <= 6'd8 ;
 				end
-				4'd8: begin
+				6'd8: begin
 					/* difference potentially can be 16 bits... */
-					delta_30 = u0 - desired_y0 ;
-					delta_31 = u1 - desired_y1 ;
+					delta_30 = 2 * (u0 - desired_y0) ;
+					delta_31 = 2 * (u1 - desired_y1) ;
 					
-					state <= 4'd9 ;
+					state <= 6'd9 ;
 				end
-				4'd9: begin
+				6'd9: begin
 					// set up activation function's derivative
 					ad0_x <= z0 ;
 					ad1_x <= z1 ;
@@ -209,9 +209,9 @@ module BackPropagationNN(
 					ad4_x <= z4 ;
 					ad5_x <= z5 ;
 										
-					state <= 4'd10 ;
+					state <= 6'd10 ;
 				end
-				4'd10: begin
+				6'd10: begin
 					t0 <= ad0_y ;
 					t1 <= ad1_y ;
 					t2 <= ad2_y ;					
@@ -219,9 +219,9 @@ module BackPropagationNN(
 					t4 <= ad4_y ;
 					t5 <= ad5_y ;
 					
-					state <= 4'd11 ;
+					state <= 6'd11 ;
 				end
-				4'd11: begin
+				6'd11: begin
 					delta_20 = t0 * ( 
 						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) * delta_30 +
 						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) * delta_31
@@ -247,7 +247,80 @@ module BackPropagationNN(
 						$signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH])
 					);
 					
-					state <= 4'd0 ;
+					state <= 6'd12 ;
+				end
+				6'd12: begin
+					// reloading back weights for 1st layer
+					we <= 0 ;
+					
+					addr <= 0 ; 
+					
+					state <= 6'd13 ;
+				end
+				6'd13: begin
+					// ready one cycle later
+					selected_data <= read_data ;
+					state <= 6'd14 ;
+				end
+				6'd14: begin
+					// setting up activation func. with I_1
+					a0_x <= x0 ;
+					a1_x <= x1 ;
+					a2_x <= x2 ;
+					a3_x <= x3 ;
+					
+					state <= 6'd15 ;
+				end
+				6'd15: begin
+					// g_1[i,j] = A(I_1[i]) * delta_2[j]
+               // w_1[i,j] = round(w_1[i,j] - learning_rate * g_1[i,j])
+					//
+					// potential overflow - 8-bit a0_y multiplied by 8-bit delta_20
+					selected_data[1 * WWIDTH - 1: 0 * WWIDTH] <= 
+						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) - (a0_y >> 3 * delta_20) ; // shifting by 3 positions is dividing by 8, which stands for dividing by 10 or 0.1*x, where 0.1 is learning rate
+					
+					selected_data[2 * WWIDTH - 1: 1 * WWIDTH] <= 
+						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) - (a0_y >> 3 * delta_21) ;
+					/*	
+							x2 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
+							x3 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]);
+					
+					z1 <= x0 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) +
+							x1 * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) +
+							x2 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) +
+							x3 * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]);
+					
+					z2 <= x0 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) +
+							x1 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) +
+							x2 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
+							x3 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
+							
+					z3 <= x0 * $signed(selected_data[13 * WWIDTH - 1: 12 * WWIDTH]) +
+							x1 * $signed(selected_data[14 * WWIDTH - 1: 13 * WWIDTH]) +
+							x2 * $signed(selected_data[15 * WWIDTH - 1: 14 * WWIDTH]) +
+							x3 * $signed(selected_data[16 * WWIDTH - 1: 15 * WWIDTH]);
+							
+					z4 <= x0 * $signed(selected_data[17 * WWIDTH - 1: 16 * WWIDTH]) +
+							x1 * $signed(selected_data[18 * WWIDTH - 1: 17 * WWIDTH]) +
+							x2 * $signed(selected_data[19 * WWIDTH - 1: 18 * WWIDTH]) +
+							x3 * $signed(selected_data[20 * WWIDTH - 1: 19 * WWIDTH]);
+					
+					z5 <= x0 * $signed(selected_data[21 * WWIDTH - 1: 20 * WWIDTH]) +
+							x1 * $signed(selected_data[22 * WWIDTH - 1: 21 * WWIDTH]) +
+							x2 * $signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) +
+							x3 * $signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]);
+					*/
+				state <= 6'd16 ;
+				end
+				6'd16: begin
+					write_data <= selected_data ;
+					
+					state <= 6'd17 ;
+				end
+				6'd17: begin
+					we <= 1 ;
+					
+					state <= 6'd0 ;
 				end
 			endcase
 		end
