@@ -2,8 +2,11 @@
 
 module FeedForwardNN_tb;
 	reg signed [8:0] x0, x1, x2, x3 ;
-	wire y0, y1;
+	wire signed [16:0] y0, y1;
    reg RST, CLK;
+	integer file, i, code;
+	parameter CYCLE = 100;
+	
    FeedForwardNN FF0 (
 		.x0(x0),
 		.x1(x1),
@@ -21,18 +24,16 @@ module FeedForwardNN_tb;
 		RST = 0 ;
 	end 
 	
-	always
-	begin
-		#100 CLK = ~CLK ;
-	end
-	
-	initial
-	begin
+	initial begin : file_block
 		#100 RST = 1 ;
 		#101 RST = 0 ;
-		
-		#0 x0 = 8'd196; x1 = 8'd243; x2 = 8'd106; x3 = 8'd149;
-		#1800 x0 = 8'd13; x1 = 8'd37; x2 = 8'd128; x3 = 8'd160;
-
-	end
-endmodule 
+		file = $fopen("testset.txt","r" );
+		for (i = 0; i < 100; i=i+1) begin
+			code = $fscanf(file, "%d\t%d\t%d\t%d\t%d\t%d\n", x0, x1, x2, x3, 0, 0);
+			#4800;
+			$display("%d: x0=%d, x1=%d, x2=%d, x3=%d, y0=%d y1=%d", i, x0, x1, x2, x3, y0, y1);
+		end // for
+		$fclose(file); $stop;
+	end // initial
+	always #(CYCLE) CLK = ~CLK; // Clock generator
+endmodule  

@@ -22,8 +22,7 @@ module FeedForwardNN(
    input wire signed [8:0] x0, x1,
 	input wire signed [8:0] x2,
 	input wire signed [8:0] x3,
-   output wire y0,
-	output wire y1,
+   output reg signed [16:0] y0, y1,
    input RST, CLK
 	);
    /* WWIDTH = Width of one weight */
@@ -173,13 +172,18 @@ module FeedForwardNN(
 							v4 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
 							v5 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
 							
+					state <= 4'd8 ;
+				end
+				4'd8: begin
+					y0 <= u0 ;
+					y1 <= u1 ;
+					
 					state <= 4'd0 ;
 				end
 			endcase
 		end
 	end 
-	assign y0 = ~selected_data[0] ;
-	assign y1 = selected_data[1] ;
+
 endmodule
 
 /* Activation function module */
