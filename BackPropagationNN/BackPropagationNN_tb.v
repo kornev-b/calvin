@@ -34,7 +34,9 @@ module BackPropagationNN_tb;
 		for (i = 0; i < 200; i=i+1) begin
 			code = $fscanf(file, "%d\t%d\t%d\t%d\t%d\t%d\n", x0, x1, x2, x3, desired_y0, desired_y1);
 			#4800;
+			
 		end // for
+		$fclose(file); $stop;
 	end // initial
 	always #(CYCLE) CLK = ~CLK; // Clock generator
 endmodule  
