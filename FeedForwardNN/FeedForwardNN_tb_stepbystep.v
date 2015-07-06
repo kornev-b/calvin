@@ -1,8 +1,9 @@
 `timescale 1 ps/ 1 ps
 
 module FeedForwardNN_tb_stepbystep;
-	reg signed [8:0] x0, x1, x2, x3 ;
-	wire signed [16:0] y0, y1;
+	parameter WWDITH = 32;
+	reg signed [WWDITH:0] x0, x1, x2, x3 ;
+	wire signed [WWDITH*2:0] y0, y1;
 	reg RST, CLK;
 	integer file, i, code;
 	parameter CYCLE = 100;

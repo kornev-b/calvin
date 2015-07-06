@@ -16,54 +16,67 @@ module TOP (
 	FeedForwardNN ff(x0, x1, x2, x3, y0, y1, CLOCK_50) ;
 endmodule //end top level DE2_TOP	
 */
-module FeedForwardNN(
+module FeedForwardNN #(
+		/* WWIDTH = Bitwidth of one weight */
+		parameter WWIDTH = 32
+	) 
+	(
 		/* x inputs are in range 0-255 => 8 bits wide */
 		/* for x's to be signed we need 9 bits! */
-		input wire signed [8:0] x0, x1,
-		input wire signed [8:0] x2,
-		input wire signed [8:0] x3,
-		output reg signed [16:0] y0, y1,
+		/* WWIDTH, not WWIDTH-1 is used because one more bit is neeeded for sign */
+		input wire signed [WWIDTH:0] x0, x1,
+		input wire signed [WWIDTH:0] x2,
+		input wire signed [WWIDTH:0] x3,
+		output reg signed [WWIDTH*2:0] y0, y1,
 		input RST, CLK
 	);
-	/* WWIDTH = Width of one weight */
-	parameter WWIDTH = 8;
+	
 	
 	/* bias term */
-	reg signed [8:0] bias;
+	reg signed [WWIDTH:0] bias;
 
 	reg [3:0] addr;
-	reg [255:0] write_data;
-	reg [255:0] selected_data;
+	reg [1023:0] write_data;
+	reg [1023:0] selected_data;
 	reg we;
-	wire [255:0] read_data;
+	wire [1023:0] read_data;
 	reg [3:0] state;
 	wire reset;
 	reg [3:0] counter;
 	
-	reg signed [16:0] a0_x, a1_x, a2_x, a3_x, a4_x, a5_x;
-	wire signed [8:0] a0_y, a1_y, a2_y, a3_y, a4_y, a5_y;
+	reg signed [WWIDTH*2:0] ab_x, a0_x, a1_x, a2_x, a3_x, a4_x, a5_x;
+	wire signed [WWIDTH:0] ab_y, a0_y, a1_y, a2_y, a3_y, a4_y, a5_y;
 	
 	/* TEMPORARY registers to save results of dot product of inputs and weights at 1st layer */
 	/* 16-bit wide because we multiply 8-bit input to 8-bit weight */
 	/* for z's to be signed we need 17 bits!*/
-	reg signed [16:0] z0, z1, z2, z3, z4, z5;
-	reg signed [16:0] u0, u1;
+	reg signed [WWIDTH*2:0] z0, z1, z2, z3, z4, z5;
+	reg signed [WWIDTH*2:0] u0, u1;
 	
 	/* Storing activation function output */
-	reg signed [8:0] v0, v1, v2, v3, v4, v5 ; 
+	reg signed [WWIDTH:0] v0, v1, v2, v3, v4, v5 ; 
 	
 	wire mem_clk;
 	//mem_PLL u1(CLK, mem_clk);
 	assign mem_clk = CLK;
 	assign reset = RST;
 	
-	ram_pos_thru memory(read_data, addr, write_data, we, mem_clk);
-	activation a0(a0_x, a0_y, mem_clk);
-	activation a1(a1_x, a1_y, mem_clk);
-	activation a2(a2_x, a2_y, mem_clk);
-	activation a3(a3_x, a3_y, mem_clk);
-	activation a4(a4_x, a4_y, mem_clk);
-	activation a5(a5_x, a5_y, mem_clk);
+	ram_pos_thru memory (
+			.q(read_data), 
+			.a(addr), 
+			.d(write_data),
+			.we(we),
+			.clk(mem_clk)
+		);
+
+	// TODO: group instantiation
+	activation #(.WWIDTH(WWIDTH)) ab(ab_x, ab_y, mem_clk);
+	activation #(.WWIDTH(WWIDTH)) a0(a0_x, a0_y, mem_clk);
+	activation #(.WWIDTH(WWIDTH)) a1(a1_x, a1_y, mem_clk);
+	activation #(.WWIDTH(WWIDTH)) a2(a2_x, a2_y, mem_clk);
+	activation #(.WWIDTH(WWIDTH)) a3(a3_x, a3_y, mem_clk);
+	activation #(.WWIDTH(WWIDTH)) a4(a4_x, a4_y, mem_clk);
+	activation #(.WWIDTH(WWIDTH)) a5(a5_x, a5_y, mem_clk);
 	
 	always @ (negedge mem_clk)
 	begin
@@ -137,6 +150,7 @@ module FeedForwardNN(
 				end
 				4'd3: begin
 					// set up activation func.
+					ab_x <= bias ;
 					a0_x <= z0 ;
 					a1_x <= z1 ;
 					a2_x <= z2 ;
@@ -147,6 +161,7 @@ module FeedForwardNN(
 					state <= 4'd4 ;
 				end
 				4'd4: begin
+					bias <= ab_y ;
 					v0 <= a0_y ;
 					v1 <= a1_y ;
 					v2 <= a2_y ;
@@ -169,7 +184,7 @@ module FeedForwardNN(
 					selected_data <= read_data ;
 
 					/* assigning bias term for calculating second layer. NOT SURE this is most suitable place */
-					bias <= 9'd1;
+					//bias <= 9'd1;
 
 					state <= 4'd7 ;
 				end
@@ -231,9 +246,9 @@ endmodule
 		else:
 			return slope * value + (f_min + f_max) / 2 
 */
-module activation( x , y, clk);
-	input wire signed [16:0] x;
-	output reg signed [8:0] y;
+module activation #(parameter WWIDTH = 8) ( x , y, clk);
+	input wire signed [WWIDTH*2:0] x;
+	output reg signed [WWIDTH:0] y;
 	input clk;
 	
 	always @ (posedge clk)
@@ -266,13 +281,14 @@ module activation( x , y, clk);
 	end
 endmodule
 
-module ram_pos_thru (q, a, d, we, clk);
-	output [255:0] q;
-	reg [255:0] q;
-	input [255:0] d;
-	input [3:0] a;
+module ram_pos_thru #(parameter WORD_LENGTH=1024, WORD_COUNT=4)(q, a, d, we, clk);
+	input [WORD_COUNT-1:0] a;
+	input [WORD_LENGTH-1:0] d;	
 	input we, clk;
-	reg [255:0] mem [3:0] /* synthesis ram_init_file = "TestMemFile.hex" */ ;
+	output [WORD_LENGTH-1:0] q;
+
+	reg [WORD_LENGTH-1:0] q;
+	reg [WORD_LENGTH-1:0] mem [WORD_COUNT-1:0] /* synthesis ram_init_file = "TestMemFile.hex" */ ;
 	
 	initial begin
 		$readmemh("ram.hex", mem);
