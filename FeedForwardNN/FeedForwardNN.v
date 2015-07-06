@@ -17,17 +17,20 @@ module TOP (
 endmodule //end top level DE2_TOP	
 */
 module FeedForwardNN(
-	/* x inputs are in range 0-255 => 8 bits wide */
-	/* for x's to be signed we need 9 bits! */
-   input wire signed [8:0] x0, x1,
-	input wire signed [8:0] x2,
-	input wire signed [8:0] x3,
-   output reg signed [16:0] y0, y1,
-   input RST, CLK
+		/* x inputs are in range 0-255 => 8 bits wide */
+		/* for x's to be signed we need 9 bits! */
+		input wire signed [8:0] x0, x1,
+		input wire signed [8:0] x2,
+		input wire signed [8:0] x3,
+		output reg signed [16:0] y0, y1,
+		input RST, CLK
 	);
-   /* WWIDTH = Width of one weight */
+	/* WWIDTH = Width of one weight */
 	parameter WWIDTH = 8;
 	
+	/* bias term */
+	reg signed [8:0] bias;
+
 	reg [3:0] addr;
 	reg [255:0] write_data;
 	reg [255:0] selected_data;
@@ -81,6 +84,9 @@ module FeedForwardNN(
 					// ready one cycle later
 					selected_data <= read_data ;
 					
+					/* assigning bias term for calculating first layer. NOT SURE this is most suitable place */
+					bias <= 9'd1;
+
 					state <= 4'd2 ;
 				end
 				4'd2: begin
@@ -90,35 +96,42 @@ module FeedForwardNN(
 					/* w1 is 8th to 15th bits */
 					/* to simpify we used WWIDTH parameter */
 					/* so Nth weight is in range [N + 1 * WWIDTH - 1: N * WWIDTH] */
-					z0 <= x0 * $signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) +
-							x1 * $signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) +
-							x2 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
-							x3 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]);
+
+					z0 <= 	bias * $signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) +
+							x0 * $signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) +
+							x1 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
+							x2 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) +
+							x3 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]);
+
+					z1 <= 	bias * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) +
+							x0 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) +
+							x1 * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) +
+							x2 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) + 
+							x3 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]); 
 					
-					z1 <= x0 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) +
-							x1 * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) +
-							x2 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) +
-							x3 * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]);
-					
-					z2 <= x0 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) +
-							x1 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) +
-							x2 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
-							x3 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
+					z2 <= 	bias * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
+							x0 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]) +
+							x1 * $signed(selected_data[13 * WWIDTH - 1: 12 * WWIDTH]) +
+							x2 * $signed(selected_data[14 * WWIDTH - 1: 13 * WWIDTH]) + 
+							x3 * $signed(selected_data[15 * WWIDTH - 1: 14 * WWIDTH]);
 							
-					z3 <= x0 * $signed(selected_data[13 * WWIDTH - 1: 12 * WWIDTH]) +
-							x1 * $signed(selected_data[14 * WWIDTH - 1: 13 * WWIDTH]) +
-							x2 * $signed(selected_data[15 * WWIDTH - 1: 14 * WWIDTH]) +
-							x3 * $signed(selected_data[16 * WWIDTH - 1: 15 * WWIDTH]);
-							
-					z4 <= x0 * $signed(selected_data[17 * WWIDTH - 1: 16 * WWIDTH]) +
+					z3 <= 	bias * $signed(selected_data[16 * WWIDTH - 1: 15 * WWIDTH]) +
+							x0 * $signed(selected_data[17 * WWIDTH - 1: 16 * WWIDTH]) +
 							x1 * $signed(selected_data[18 * WWIDTH - 1: 17 * WWIDTH]) +
 							x2 * $signed(selected_data[19 * WWIDTH - 1: 18 * WWIDTH]) +
 							x3 * $signed(selected_data[20 * WWIDTH - 1: 19 * WWIDTH]);
+							
+					z4 <= 	bias * $signed(selected_data[21 * WWIDTH - 1: 20 * WWIDTH]) +
+							x0 * $signed(selected_data[22 * WWIDTH - 1: 21 * WWIDTH]) +
+							x1 * $signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) +
+							x2 * $signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]) +
+							x3 * $signed(selected_data[25 * WWIDTH - 1: 24 * WWIDTH]);
 					
-					z5 <= x0 * $signed(selected_data[21 * WWIDTH - 1: 20 * WWIDTH]) +
-							x1 * $signed(selected_data[22 * WWIDTH - 1: 21 * WWIDTH]) +
-							x2 * $signed(selected_data[23 * WWIDTH - 1: 22 * WWIDTH]) +
-							x3 * $signed(selected_data[24 * WWIDTH - 1: 23 * WWIDTH]);
+					z5 <= 	bias * $signed(selected_data[26 * WWIDTH - 1: 25 * WWIDTH]) +
+							x0 * $signed(selected_data[27 * WWIDTH - 1: 26 * WWIDTH]) +
+							x1 * $signed(selected_data[28 * WWIDTH - 1: 27 * WWIDTH]) +
+							x2 * $signed(selected_data[29 * WWIDTH - 1: 28 * WWIDTH]) + 
+							x3 * $signed(selected_data[30 * WWIDTH - 1: 29 * WWIDTH]);
 					
 					state <= 4'd3 ;
 				end
@@ -154,30 +167,44 @@ module FeedForwardNN(
 				4'd6: begin
 					// ready one cycle later
 					selected_data <= read_data ;
+
+					/* assigning bias term for calculating second layer. NOT SURE this is most suitable place */
+					bias <= 9'd1;
+
 					state <= 4'd7 ;
 				end
 				4'd7: begin
 					// calculating dot products
-					u0 <= v0 * $signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) +
-							v1 * $signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) +
-							v2 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
-							v3 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) +
-							v4 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) +
-							v5 * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]);
+					u0 <= 	bias * $signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) +
+							v0 * $signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) +
+ 							v1 * $signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) +
+ 							v2 * $signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) +
+ 							v3 * $signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) +
+ 							v4 * $signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) +
+ 							v5 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]);
 
-					u1 <= v0 * $signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) +
-							v1 * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) +
-							v2 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) +
-							v3 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) +
-							v4 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
-							v5 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]);
+					u1 <= 	bias * $signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) +
+							v0 * $signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) +
+							v1 * $signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) +
+							v2 * $signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) +
+							v3 * $signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]) +
+							v4 * $signed(selected_data[13 * WWIDTH - 1: 12 * WWIDTH]) +
+							v5 * $signed(selected_data[14 * WWIDTH - 1: 13 * WWIDTH]);
 							
 					state <= 4'd8 ;
 				end
 				4'd8: begin
-					y0 <= u0 ;
-					y1 <= u1 ;
+					// set up activation func.
+					a0_x <= u0 ;
+					a1_x <= u1 ;
 					
+					state <= 4'd9 ;
+				end
+				4'd9: begin
+					// done
+					y0 <= a0_y ;
+					y1 <= a1_y  ;
+
 					state <= 4'd0 ;
 				end
 			endcase
@@ -211,9 +238,9 @@ module activation( x , y, clk);
 	
 	always @ (posedge clk)
 	begin
-		if(x <= $signed(-16'd2)) begin
+		if(x <= $signed(-16'd200)) begin
 			y = -8'd1 ;
-		end else if (x >= $signed(16'd2)) begin
+		end else if (x >= $signed(16'd200)) begin
 			y = 8'd1 ;
 		/* this case should return value * slope (x * 1/2) */
 		/* 

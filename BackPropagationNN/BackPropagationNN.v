@@ -24,7 +24,7 @@ module BackPropagationNN(
 		input wire signed [8:0] x3,
 		input wire signed [8:0] desired_y0, desired_y1,
 		input RST, CLK,
-		output wire y0, y1   
+		output reg signed [255:0] y0, y1
 	);
    /* WWIDTH = Width of one weight */
 	parameter WWIDTH = 8;
@@ -401,50 +401,53 @@ module BackPropagationNN(
 				6'd21: begin
 					/* 1st layer 0th neuron */
 					selected_data[1 * WWIDTH - 1: 0 * WWIDTH] <=
-						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) - ((a0_y * delta_30) >>> 3) ;
+						$signed(selected_data[1 * WWIDTH - 1: 0 * WWIDTH]) - ((a0_y * delta_30) / 8'sd8) ;
 					
 					selected_data[7 * WWIDTH - 1: 6 * WWIDTH] <=
-						$signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) - ((a0_y * delta_31) >>> 3) ;
+						$signed(selected_data[7 * WWIDTH - 1: 6 * WWIDTH]) - ((a0_y * delta_31) / 8'sd8) ;
 					
 					/* 1st layer 1st neuron */
 					selected_data[2 * WWIDTH - 1: 1 * WWIDTH] <=
-						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) - ((a1_y * delta_30) >>> 3) ;
+						$signed(selected_data[2 * WWIDTH - 1: 1 * WWIDTH]) - ((a1_y * delta_30) / 8'sd8) ;
 					
 					selected_data[8 * WWIDTH - 1: 7 * WWIDTH] <=
-						$signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) - ((a1_y * delta_31) >>> 3) ;
+						$signed(selected_data[8 * WWIDTH - 1: 7 * WWIDTH]) - ((a1_y * delta_31) / 8'sd8) ;
 						
 					/* 1st layer 2nd neuron */
 					selected_data[3 * WWIDTH - 1: 2 * WWIDTH] <=
-						$signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) - ((a2_y * delta_30) >>> 3) ;
+						$signed(selected_data[3 * WWIDTH - 1: 2 * WWIDTH]) - ((a2_y * delta_30) / 8'sd8) ;
 					
 					selected_data[9 * WWIDTH - 1: 8 * WWIDTH] <=
-						$signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) - ((a2_y * delta_31) >>> 3) ;
+						$signed(selected_data[9 * WWIDTH - 1: 8 * WWIDTH]) - ((a2_y * delta_31) / 8'sd8) ;
 						
 					/* 1st layer 3rd neuron */
 					selected_data[4 * WWIDTH - 1: 3 * WWIDTH] <=
-						$signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) - ((a3_y * delta_30) >>> 3) ;
+						$signed(selected_data[4 * WWIDTH - 1: 3 * WWIDTH]) - ((a3_y * delta_30) / 8'sd8) ;
 					
 					selected_data[10 * WWIDTH - 1: 9 * WWIDTH] <=
-						$signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) - ((a3_y * delta_31) >>> 3) ;		
+						$signed(selected_data[10 * WWIDTH - 1: 9 * WWIDTH]) - ((a3_y * delta_31) / 8'sd8) ;		
 			
 					/* 1st layer 4th neuron */
 					selected_data[5 * WWIDTH - 1: 4 * WWIDTH] <=
-						$signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) - ((a4_y * delta_30) >>> 3) ;
+						$signed(selected_data[5 * WWIDTH - 1: 4 * WWIDTH]) - ((a4_y * delta_30) / 8'sd8) ;
 					
 					selected_data[11 * WWIDTH - 1: 10 * WWIDTH] <=
-						$signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) - ((a4_y * delta_31) >>> 3) ;
+						$signed(selected_data[11 * WWIDTH - 1: 10 * WWIDTH]) - ((a4_y * delta_31) / 8'sd8) ;
 											
 					/* 1st layer 5th neuron */
 					selected_data[6 * WWIDTH - 1: 5 * WWIDTH] <=
-						$signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) - ((a5_y * delta_30) >>> 3) ;
+						$signed(selected_data[6 * WWIDTH - 1: 5 * WWIDTH]) - ((a5_y * delta_30) / 8'sd8) ;
 					
 					selected_data[12 * WWIDTH - 1: 11 * WWIDTH] <=
-						$signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]) - ((a5_y * delta_31) >>> 3) ;
+						$signed(selected_data[12 * WWIDTH - 1: 11 * WWIDTH]) - ((a5_y * delta_31) / 8'sd8) ;
 					
 					state <= 6'd22 ;
 				end
 				6'd22: begin
 					write_data <= selected_data ;
+					
+					// memory word debug
+					y0 <= selected_data ;
 					
 					state <= 6'd23 ;
 				end
@@ -456,8 +459,6 @@ module BackPropagationNN(
 			endcase
 		end
 	end 
-	assign y0 = ~selected_data[0] ;
-	assign y1 = selected_data[1] ;
 endmodule
 
 /* Activation function module */
@@ -486,9 +487,9 @@ module activation_derivative( x , y, clk);
 	
 	always @ (posedge clk)
 	begin
-		if(x <= $signed(-16'd2)) begin
+		if(x <= $signed(-16'd200)) begin
 			y = 8'd0 ;
-		end else if (x >= $signed(16'd2)) begin
+		end else if (x >= $signed(16'd200)) begin
 			y = 8'd0 ;
 		/* this case should return slope (1/2) */
 		/* but in all-integer design - ? */

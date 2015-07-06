@@ -3,7 +3,7 @@
 module BackPropagationNN_tb;
 	reg signed [8:0] x0, x1, x2, x3 ;
 	reg signed [8:0] desired_y0, desired_y1 ;
-	wire y0, y1;
+	wire signed [255:0]  y0, y1;
    reg RST, CLK;
 	integer file, i, code;
 	parameter CYCLE = 100;
@@ -34,7 +34,7 @@ module BackPropagationNN_tb;
 		for (i = 0; i < 200; i=i+1) begin
 			code = $fscanf(file, "%d\t%d\t%d\t%d\t%d\t%d\n", x0, x1, x2, x3, desired_y0, desired_y1);
 			#4800;
-			
+			$display("%d: x0=%d, x1=%d, x2=%d, x3=%d, y0=%h", i, x0, x1, x2, x3, y0);
 		end // for
 		$fclose(file); $stop;
 	end // initial
